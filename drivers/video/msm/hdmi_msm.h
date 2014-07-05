@@ -1,4 +1,4 @@
-/* Copyright (c) 2010-2012, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2010-2012, Code Aurora Forum. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -120,7 +120,7 @@ void hdmi_phy_reset(void);
 void hdmi_msm_reset_core(void);
 void hdmi_msm_init_phy(int video_format);
 void hdmi_msm_powerdown_phy(void);
-void hdmi_frame_ctrl_cfg(const struct hdmi_disp_mode_timing_type *timing);
+void hdmi_frame_ctrl_cfg(const struct msm_hdmi_mode_timing_info *timing);
 void hdmi_msm_phy_status_poll(void);
 #endif
 
@@ -131,5 +131,44 @@ void hdmi_msm_cec_msg_recv(void);
 void hdmi_msm_cec_one_touch_play(void);
 void hdmi_msm_cec_msg_send(struct hdmi_msm_cec_msg *msg);
 #endif /* CONFIG_FB_MSM_HDMI_MSM_PANEL_CEC_SUPPORT */
+
+/* LGE_CHANGE
+ * not used api
+ * (feature CONFIG_FB_MSM_HDMI_MHL_8334 is disabled)
+ * 2012-09-07, chaeuk.lee@lge.com
+ */
+#ifdef CONFIG_FB_MSM_HDMI_MHL_8334
 void mhl_connect_api(boolean on);
+#endif /* CONFIG_FB_MSM_HDMI_MHL_8334 */
+
+/* LGE_CHANGE
+ * default video resolution for each target
+ * 2012-09-22, chaeuk.lee@lge.com
+ */
+#ifdef CONFIG_MACH_LGE
+
+#ifdef CONFIG_SII8334_MHL_TX
+boolean hdmi_msm_is_dvi_mode(void);
+#endif
+
+/* FULL HD (MHL) */
+#if defined(CONFIG_MACH_APQ8064_GVDCM) || \
+	defined(CONFIG_MACH_APQ8064_GVKDDI)
+#define LGE_DEFAULT_HDMI_VIDEO_RESOLUTION HDMI_VFRMT_1920x1080p30_16_9
+/* FULL HD (SLIMPORT) */
+#elif defined(CONFIG_MACH_APQ8064_GKKT) || \
+	defined(CONFIG_MACH_APQ8064_GKSK) || \
+	defined(CONFIG_MACH_APQ8064_GKU) || \
+	defined(CONFIG_MACH_APQ8064_GKATT) || \
+	defined(CONFIG_MACH_APQ8064_GKGLOBAL) || \
+	defined(CONFIG_MACH_APQ8064_GVKT)
+#define LGE_DEFAULT_HDMI_VIDEO_RESOLUTION HDMI_VFRMT_1920x1080p60_16_9
+/* HD (Default) */
+#else
+#define LGE_DEFAULT_HDMI_VIDEO_RESOLUTION HDMI_VFRMT_1920x1080p30_16_9
+//#define LGE_DEFAULT_HDMI_VIDEO_RESOLUTION HDMI_VFRMT_1280x720p60_16_9
+#endif
+
+#endif /* CONFIG_MACH_LGE */
+
 #endif /* __HDMI_MSM_H__ */
