@@ -5,6 +5,10 @@
 menu "Near Field Communication (NFC) devices"
 	depends on NFC
 
+config LGE_NFC
+	bool "NFC Device Enabled for LGE"
+	default n
+
 config PN544_NFC
 	tristate "PN544 NFC driver"
 	depends on I2C
